@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import UserDAO from "../service/UserDAO";
+import BaseLayout from "../components/BaseLayout.vue";
 
 const user = ref({
     name: "",
@@ -35,6 +36,7 @@ const submitForm = async () => {
 </script>
 
 <template>
+    <BaseLayout>
     <div class="flex justify-center py-1">
         <form @submit.prevent="submitForm" class="space-y-6 bg-white shadow-md p-6 rounded-xl w-full max-w-md">
             <h2 class="text-xl font-bold text-gray-700">Cadastrar Usuário</h2>
@@ -114,4 +116,5 @@ const submitForm = async () => {
             </button>
         </router-link>
     </div>
+    </BaseLayout>
 </template>

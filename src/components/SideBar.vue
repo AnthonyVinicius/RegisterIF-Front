@@ -45,7 +45,7 @@
 
 <script setup>
 import { shallowRef } from 'vue';
-import { User, GraduationCap } from 'lucide-vue-next';
+import { User, GraduationCap, BookCheck  } from 'lucide-vue-next';
 
 const userAdm = true
 
@@ -59,6 +59,7 @@ defineProps({
 const menuItemsUser = shallowRef([
     { to: "/userDashboard", label: 'Usuarios', icon: User },
     { to: "/courseDashboard", label: "Cursos", icon: GraduationCap },
+    { to: "/subject", label: "Diciplinas", icon: BookCheck  },
 ]);
 
 

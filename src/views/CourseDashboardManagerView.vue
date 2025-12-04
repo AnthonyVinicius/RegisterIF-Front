@@ -1,58 +1,59 @@
 <script setup>
-import { RouterLink } from "vue-router";
 import Actions from "../components/Actions.vue";
 import { TextAlignJustify, NotepadText, Trash2 } from "lucide-vue-next";
+import CourseDAO from "../service/CourseDAO";
 import { onMounted, ref } from "vue";
-import UserDao from "../service/UserDAO";
 import BaseLayout from "../components/BaseLayout.vue";
 
-const users = ref([]);
+const courses = ref([]);
 
-async function loadUsers() {
+async function loadCourses() {
   try {
-    users.value = await UserDao.getAll();
+    courses.value = await CourseDAO.getAll();
   } catch (error) {
-    console.error("Erro ao carregar usuários", error);
+    console.log("Erro ao resgatar cursos", error);
   }
 }
 
-async function deleteUser(id) {
-  if (!confirm("Tem certeza que deseja excluir este usuário?")) return;
+async function deleteCourse(id) {
+  if (!confirm("Tem certeza que deseja excluir este curso?")) return;
 
   try {
-    await UserDao.delete(id);
-    users.value = users.value.filter((u) => u.id !== id);
+    await CourseDAO.delete(id);
+    courses.value = courses.value.filter((c) => c.id !== id);
   } catch (error) {
-    console.error("Erro ao excluir usuário:", error);
-    alert("Erro ao excluir usuário.");
+    console.error("Erro ao excluir curso:", error);
+    alert("Erro ao excluir curso.");
   }
 }
-
-onMounted(loadUsers);
 
 const actions = [
   {
     icon: NotepadText,
-    title: "Cadastrar Usuário",
-    description: "Adicionar novos usuários",
+    title: "Cadastrar Curso",
+    description: "Adicionar novos cursos",
     color: "text-green-800",
-    to: "/registerUser",
+    to: "/registerCourse",
   },
   {
     icon: TextAlignJustify,
-    title: "Todos os Usuários",
-    description: "Visualizar e gerenciar",
+    title: "Todos os Cursos",
+    description: "Visualizar e gerenciar cursos",
     color: "text-green-800",
-    to: "/allUsers",
+    to: "/allCourses",
   },
 ];
+
+onMounted(loadCourses);
 </script>
 
 <template>
   <BaseLayout>
     <div class="space-y-8">
       <header>
-        <h1 class="text-2xl font-bold text-ponto-if-green">User Dashboard</h1>
+        <h1 class="text-2xl font-bold text-ponto-if-green">
+          Courses Dashboard
+        </h1>
       </header>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -76,12 +77,13 @@ const actions = [
 
       <section class="bg-white p-5 rounded-md shadow-sm">
         <div class="flex items-center mb-3">
-          <h2 class="text-lg font-semibold">Últimos Usuários Cadastrados</h2>
+          <h2 class="text-lg font-semibold">Últimos Cursos Cadastrados</h2>
           <RouterLink
-            to="/allUsers"
+            to="/allCourses"
             class="ml-auto text-green-800 hover:underline"
-            >Ver todos</RouterLink
           >
+            Ver todos
+          </RouterLink>
         </div>
 
         <div
@@ -91,18 +93,9 @@ const actions = [
             <table class="w-full text-sm text-left text-gray-700">
               <thead class="bg-[#1C5E27]">
                 <tr>
-                  <th class="px-6 py-3 font-semibold uppercase text-white">
-                    Nome
-                  </th>
-                  <th class="px-6 py-3 font-semibold uppercase text-white">
-                    Email
-                  </th>
-                  <th class="px-6 py-3 font-semibold uppercase text-white">
-                    Matrícula
-                  </th>
-                  <th
-                    class="px-6 py-3 font-semibold uppercase text-white text-center"
-                  >
+                  <th class="px-6 py-3 font-semibold text-white">Nome</th>
+                  <th class="px-6 py-3 font-semibold text-white">Acrônimo</th>
+                  <th class="px-6 py-3 font-semibold text-white text-center">
                     Ações
                   </th>
                 </tr>
@@ -110,33 +103,30 @@ const actions = [
 
               <tbody class="divide-y divide-gray-200 bg-white">
                 <tr
-                  v-for="user in users"
-                  :key="user.id"
-                  class="hover:bg-gray-50 transition-colors duration-150"
+                  v-for="course in courses"
+                  :key="course.id"
+                  class="hover:bg-gray-50"
                 >
                   <td
-                    class="px-6 py-4 whitespace-nowrap font-medium text-gray-900"
+                    class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 flex items-center gap-2"
                   >
-                    {{ user.name }}
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    {{ user.email }}
-                  </td>
-
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="bg-green-50 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full"
+                    <div
+                      class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-800 font-semibold"
                     >
-                      {{ user.registration }}
-                    </span>
+                      {{ course.name.charAt(0).toUpperCase() }}
+                    </div>
+                    {{ course.name }}
                   </td>
 
-                  <td class="px-6 py-4 flex justify-center">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ course.acronym }}
+                  </td>
+
+                  <td class="px-6 py-4 whitespace-nowrap flex justify-center">
                     <button
-                      @click="deleteUser(user.id)"
+                      @click="deleteCourse(course.id)"
                       class="text-red-600 hover:text-red-800"
-                      title="Excluir"
+                      title="Excluir curso"
                     >
                       <Trash2 class="w-5 h-5" />
                     </button>

@@ -5,9 +5,7 @@ import BaseLayout from './components/BaseLayout.vue';
 
 <template>
   <div>
-    <BaseLayout>
       <RouterView />
-    </BaseLayout>
   </div>
 </template>
 
