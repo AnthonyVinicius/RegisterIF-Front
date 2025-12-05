@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import CourseDAO from "../service/CourseDAO";
 import BaseLayout from "../components/BaseLayout.vue";
+
+const router = useRouter();
 
 const course = ref({
   name: "",
@@ -21,13 +24,16 @@ async function submitForm() {
   try {
     await CourseDAO.insert(course.value);
     alert("Curso cadastrado com sucesso!");
-    limparForm();
+
+    router.back();
+
   } catch (err) {
     console.error("Erro ao cadastrar curso:", err);
     alert("Erro ao cadastrar curso: " + (err.response?.data?.message || err.message));
   }
 }
 </script>
+
 
 <template>
   <BaseLayout>
