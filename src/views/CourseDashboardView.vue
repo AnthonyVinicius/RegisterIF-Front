@@ -57,17 +57,10 @@ onMounted(loadCourses);
       </header>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        <RouterLink
-          v-for="action in actions"
-          :key="action.title"
-          :to="action.to"
-        >
+        <RouterLink v-for="action in actions" :key="action.title" :to="action.to">
           <Actions>
             <template #logo>
-              <component
-                :is="action.icon"
-                :class="`${action.color} w-12 h-12`"
-              />
+              <component :is="action.icon" :class="`${action.color} w-12 h-12`" />
             </template>
             <template #title>{{ action.title }}</template>
             <template #description>{{ action.description }}</template>
@@ -78,17 +71,12 @@ onMounted(loadCourses);
       <section class="bg-white p-5 rounded-md shadow-sm">
         <div class="flex items-center mb-3">
           <h2 class="text-lg font-semibold">Últimos Cursos Cadastrados</h2>
-          <RouterLink
-            to="/allCourses"
-            class="ml-auto text-green-800 hover:underline"
-          >
+          <RouterLink to="/allCourses" class="ml-auto text-green-800 hover:underline">
             Ver todos
           </RouterLink>
         </div>
 
-        <div
-          class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden"
-        >
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-700">
               <thead class="bg-[#1C5E27]">
@@ -102,20 +90,16 @@ onMounted(loadCourses);
               </thead>
 
               <tbody class="divide-y divide-gray-200 bg-white">
-                <tr
-                  v-for="course in courses"
-                  :key="course.id"
-                  class="hover:bg-gray-50"
-                >
+                <tr v-for="course in courses" :key="course.id" class="hover:bg-gray-50">
                   <td
-                    class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 flex items-center gap-2"
-                  >
-                    <div
-                      class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-800 font-semibold"
-                    >
-                      {{ course.name.charAt(0).toUpperCase() }}
-                    </div>
-                    {{ course.name }}
+                    class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 flex items-center gap-2 cursor-pointer">
+                    <RouterLink :to="`/course/${course.id}/subjects`" class="flex items-center gap-2 hover:underline">
+                      <div
+                        class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-800 font-semibold">
+                        {{ course.name.charAt(0).toUpperCase() }}
+                      </div>
+                      {{ course.name }}
+                    </RouterLink>
                   </td>
 
                   <td class="px-6 py-4 whitespace-nowrap">
@@ -123,11 +107,8 @@ onMounted(loadCourses);
                   </td>
 
                   <td class="px-6 py-4 whitespace-nowrap flex justify-center">
-                    <button
-                      @click="deleteCourse(course.id)"
-                      class="text-red-600 hover:text-red-800"
-                      title="Excluir curso"
-                    >
+                    <button @click="deleteCourse(course.id)" class="text-red-600 hover:text-red-800"
+                      title="Excluir curso">
                       <Trash2 class="w-5 h-5" />
                     </button>
                   </td>
