@@ -58,8 +58,10 @@ defineProps({
 
 const menuItemsUser = shallowRef([
     { to: "/userDashboard", label: 'Usuarios', icon: User },
-    { to: "/courseDashboard", label: "Cursos", icon: GraduationCap },
     { to: "/subject", label: "Diciplinas", icon: BookCheck  },
+    { to: "/courseDashboard", label: "Cursos", icon: GraduationCap },
+    { to: "/classroomDashboard", label: "Sala De aula", icon: GraduationCap },
+    { to: "/allOfferings", label: "Ofertas", icon: GraduationCap },
 ]);
 
 

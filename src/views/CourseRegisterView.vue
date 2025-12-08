@@ -12,14 +12,6 @@ const course = ref({
   duration: null,
 });
 
-function limparForm() {
-  course.value = {
-    name: "",
-    acronym: "",
-    duration: null,
-  };
-}
-
 async function submitForm() {
   try {
     await CourseDAO.insert(course.value);

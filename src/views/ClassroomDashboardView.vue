@@ -1,54 +1,54 @@
 <script setup>
 import Actions from "../components/Actions.vue";
 import { TextAlignJustify, NotepadText, Trash2 } from "lucide-vue-next";
-import CourseDAO from "../service/CourseDAO";
+import ClassroomDAO from "../service/ClassroomDAO";
 import { onMounted, ref } from "vue";
 import BaseLayout from "../components/BaseLayout.vue";
 
-const courses = ref([]);
+const classrooms = ref([]);
 
-async function loadCourses() {
+async function loadClassrooms() {
   try {
-    courses.value = await CourseDAO.getAll();
+    classrooms.value = await ClassroomDAO.getAll();
   } catch (error) {
-    console.log("Erro ao resgatar cursos", error);
+    console.log("Erro ao resgatar salas", error);
   }
 }
 
-async function deleteCourse(id) {
-  if (!confirm("Tem certeza que deseja excluir este curso?")) return;
+async function deleteClassroom(id) {
+  if (!confirm("Tem certeza que deseja excluir esta sala?")) return;
   try {
-    await CourseDAO.delete(id);
-    courses.value = courses.value.filter((c) => c.id !== id);
+    await ClassroomDAO.delete(id);
+    classrooms.value = classrooms.value.filter((c) => c.id !== id);
   } catch (error) {
-    alert("Erro ao excluir curso.");
+    alert("Erro ao excluir sala.");
   }
 }
 
 const actions = [
   {
     icon: NotepadText,
-    title: "Cadastrar Curso",
-    description: "Adicionar novos cursos",
+    title: "Cadastrar Sala de Aula",
+    description: "Adicionar novas salas",
     color: "text-green-800",
-    to: "/registerCourse",
+    to: "/registerClassroom",
   },
   {
     icon: TextAlignJustify,
-    title: "Todos os Cursos",
-    description: "Visualizar e gerenciar cursos",
+    title: "Todas as Salas",
+    description: "Visualizar e gerenciar salas",
     color: "text-green-800",
-    to: "/allCourses",
+    to: "/allClassroom",
   },
 ];
 
-onMounted(loadCourses);
+onMounted(loadClassrooms);
 </script>
 
 <template>
   <BaseLayout>
     <div class="space-y-8">
-      <h1 class="text-2xl font-bold text-ponto-if-green">Courses Dashboard</h1>
+      <h1 class="text-2xl font-bold text-ponto-if-green">Classroom Dashboard</h1>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
         <RouterLink v-for="action in actions" :key="action.title" :to="action.to">
@@ -64,9 +64,9 @@ onMounted(loadCourses);
 
       <section class="bg-white p-5 rounded-md shadow-sm">
         <div class="flex items-center mb-3">
-          <h2 class="text-lg font-semibold">Últimos Cursos Cadastrados</h2>
-          <RouterLink to="/allCourses" class="ml-auto text-green-800 hover:underline">
-            Ver todos
+          <h2 class="text-lg font-semibold">Últimas Salas Cadastradas</h2>
+          <RouterLink to="/allClassroom" class="ml-auto text-green-800 hover:underline">
+            Ver todas
           </RouterLink>
         </div>
 
@@ -75,28 +75,29 @@ onMounted(loadCourses);
             <thead class="bg-[#1C5E27]">
               <tr>
                 <th class="px-6 py-3 font-semibold text-white">Nome</th>
-                <th class="px-6 py-3 font-semibold text-white">Acrônimo</th>
+                <th class="px-6 py-3 font-semibold text-white">Localização</th>
                 <th class="px-6 py-3 font-semibold text-white text-center">Ações</th>
               </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200 bg-white">
-              <tr v-for="course in courses" :key="course.id" class="hover:bg-gray-50">
-                <td class="px-6 py-4 font-medium text-gray-900 cursor-pointer">
-                  <RouterLink :to="`/course/${course.id}/manage`" class="flex items-center gap-2 hover:underline">
-                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-800 font-semibold">
-                      {{ course.name.charAt(0).toUpperCase() }}
+              <tr v-for="room in classrooms" :key="room.id" class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-medium text-gray-900">
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-800 font-semibold">
+                      {{ room.name.charAt(0).toUpperCase() }}
                     </div>
-                    {{ course.name }}
-                  </RouterLink>
+                    {{ room.name }}
+                  </div>
                 </td>
 
                 <td class="px-6 py-4">
-                  {{ course.acronym }}
+                  {{ room.location }}
                 </td>
 
                 <td class="px-6 py-4 flex justify-center">
-                  <button @click="deleteCourse(course.id)" class="text-red-600 hover:text-red-800">
+                  <button @click="deleteClassroom(room.id)" class="text-red-600 hover:text-red-800">
                     <Trash2 class="w-5 h-5" />
                   </button>
                 </td>
