@@ -4,7 +4,7 @@ import Actions from "../components/Actions.vue";
 import { NotepadText, TextAlignJustify } from "lucide-vue-next";
 import BaseLayout from "../components/BaseLayout.vue";
 import { ref, onMounted } from "vue";
-import CourseDAO from "../service/CourseDAO";
+import CourseDAO from "../../service/CourseDAO";
 
 const route = useRoute();
 const courseId = route.params.id;

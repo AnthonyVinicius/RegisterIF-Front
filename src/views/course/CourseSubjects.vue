@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import SubjectDAO from "../service/SubjectDAO";
-import CourseDAO from "../service/CourseDAO";
+import SubjectDAO from "../../service/SubjectDAO";
+import CourseDAO from "../../service/CourseDAO";
 import BaseLayout from "../components/BaseLayout.vue";
 
 const route = useRoute();
@@ -20,8 +20,8 @@ async function loadLinkedSubjects() {
 
 async function loadAllSubjects() {
   const subjects = await SubjectDAO.getAll();
-  const linkedIds = linkedSubjects.value.map(s => s.id);
-  allSubjects.value = subjects.filter(s => !linkedIds.includes(s.id));
+  const linkedIds = linkedSubjects.value.map((s) => s.id);
+  allSubjects.value = subjects.filter((s) => !linkedIds.includes(s.id));
 }
 
 function toggleAttachSection() {
@@ -54,7 +54,6 @@ function goBack() {
 <template>
   <BaseLayout>
     <div class="space-y-8 px-6">
-
       <header class="flex justify-between items-center border-b pb-5">
         <h1 class="text-2xl font-bold text-[#1C5E27]">
           Disciplinas vinculadas: {{ course?.name }}
@@ -74,7 +73,9 @@ function goBack() {
           :key="subject.id"
           class="p-5 bg-green-50 border rounded-md shadow-sm"
         >
-          <h2 class="text-lg font-semibold text-[#1C5E27] mb-1">{{ subject.name }}</h2>
+          <h2 class="text-lg font-semibold text-[#1C5E27] mb-1">
+            {{ subject.name }}
+          </h2>
           <p class="text-xs text-gray-500">{{ subject.code }}</p>
           <button
             @click="detachSubject(subject)"
@@ -84,8 +85,10 @@ function goBack() {
           </button>
         </div>
 
-        <div v-if="linkedSubjects.length === 0"
-          class="flex justify-center py-10 text-gray-500 col-span-full">
+        <div
+          v-if="linkedSubjects.length === 0"
+          class="flex justify-center py-10 text-gray-500 col-span-full"
+        >
           Nenhuma disciplina vinculada ainda.
         </div>
       </section>
@@ -139,7 +142,6 @@ function goBack() {
           Voltar
         </button>
       </div>
-
     </div>
   </BaseLayout>
 </template>

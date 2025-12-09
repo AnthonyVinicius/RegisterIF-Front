@@ -175,9 +175,9 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import ModalItem from "../components/ModalItem.vue";
-import CourseDAO from "../service/CourseDAO";
-import BaseLayout from "../components/BaseLayout.vue";
+import ModalItem from "../../components/ModalItem.vue";
+import CourseDAO from "../../service/CourseDAO";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const isModalOpen = ref(false);
 const isEditMode = ref(false);

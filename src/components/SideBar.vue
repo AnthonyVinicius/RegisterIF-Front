@@ -45,7 +45,7 @@
 
 <script setup>
 import { shallowRef } from 'vue';
-import { User, GraduationCap, BookCheck  } from 'lucide-vue-next';
+import { User, GraduationCap, BookCheck, FileStack, UserPlus, Users     } from 'lucide-vue-next';
 
 const userAdm = true
 
@@ -60,8 +60,9 @@ const menuItemsUser = shallowRef([
     { to: "/userDashboard", label: 'Usuarios', icon: User },
     { to: "/subject", label: "Diciplinas", icon: BookCheck  },
     { to: "/courseDashboard", label: "Cursos", icon: GraduationCap },
-    { to: "/classroomDashboard", label: "Sala De aula", icon: GraduationCap },
-    { to: "/allOfferings", label: "Ofertas", icon: GraduationCap },
+    { to: "/classroomDashboard", label: "Sala De aula", icon: Users },
+    { to: "/allOfferings", label: "Ofertas", icon: FileStack  },
+    { to: "/enrollment", label: "Inscrição", icon: UserPlus  },
 ]);
 
 

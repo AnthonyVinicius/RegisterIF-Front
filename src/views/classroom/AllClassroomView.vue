@@ -102,8 +102,8 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import ClassroomDAO from "../service/ClassroomDAO";
-import BaseLayout from "../components/BaseLayout.vue";
+import ClassroomDAO from "../../service/ClassroomDAO";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const classrooms = ref([]);
 

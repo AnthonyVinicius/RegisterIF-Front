@@ -1,9 +1,9 @@
 <script setup>
-import Actions from "../components/Actions.vue";
+import Actions from "../../components/Actions.vue";
 import { TextAlignJustify, NotepadText, Trash2 } from "lucide-vue-next";
-import ClassroomDAO from "../service/ClassroomDAO";
+import ClassroomDAO from "../../service/ClassroomDAO";
 import { onMounted, ref } from "vue";
-import BaseLayout from "../components/BaseLayout.vue";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const classrooms = ref([]);
 

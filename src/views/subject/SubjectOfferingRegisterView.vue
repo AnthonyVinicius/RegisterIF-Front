@@ -2,11 +2,11 @@
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BaseLayout from "../components/BaseLayout.vue";
-import SubjectDAO from "../service/SubjectDAO";
-import TeacherDAO from "../service/TeacherDAO";
-import SubjectOfferingDAO from "../service/SubjectOfferingDAO";
-import CourseDAO from "../service/CourseDAO";
-import ClassroomDAO from "../service/ClassroomDAO";
+import SubjectDAO from "../../service/SubjectDAO";
+import TeacherDAO from "../../service/TeacherDAO";
+import SubjectOfferingDAO from "../../service/SubjectOfferingDAO";
+import CourseDAO from "../../service/CourseDAO";
+import ClassroomDAO from "../../service/ClassroomDAO";
 
 const route = useRoute();
 const router = useRouter();
@@ -30,7 +30,7 @@ const form = ref({
 });
 
 const selectedClassroom = computed(() =>
-  classrooms.value.find(c => c.id === form.value.classroomId)
+  classrooms.value.find((c) => c.id === form.value.classroomId)
 );
 
 async function loadData() {
@@ -57,9 +57,12 @@ async function saveOffer() {
     alert("Oferta cadastrada com sucesso!");
     router.push(`/course/${courseId}/manage`);
   } catch (error) {
-    console.log(form.value)
+    console.log(form.value);
     console.error("Erro ao cadastrar oferta:", error);
-    alert("Erro ao cadastrar oferta: " + (error.response?.data?.message || error.message));
+    alert(
+      "Erro ao cadastrar oferta: " +
+        (error.response?.data?.message || error.message)
+    );
   }
 }
 
@@ -69,7 +72,6 @@ onMounted(loadData);
 <template>
   <BaseLayout>
     <div class="flex justify-center py-6 relative px-6">
-
       <form
         @submit.prevent="saveOffer"
         class="space-y-6 bg-white shadow-md p-6 rounded-xl w-full max-w-lg"
@@ -79,31 +81,41 @@ onMounted(loadData);
         </h2>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Disciplina</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Disciplina</label
+          >
           <select
             v-model="form.subjectId"
             required
             class="w-full border-gray-300 rounded-lg shadow-sm p-2 focus:ring-2 focus:ring-green-600"
           >
             <option disabled value="">Selecione</option>
-            <option v-for="s in subjects" :key="s.id" :value="s.id">{{ s.name }}</option>
+            <option v-for="s in subjects" :key="s.id" :value="s.id">
+              {{ s.name }}
+            </option>
           </select>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Professor</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Professor</label
+          >
           <select
             v-model="form.teacherId"
             required
             class="w-full border-gray-300 rounded-lg shadow-sm p-2 focus:ring-2 focus:ring-green-600"
           >
             <option disabled value="">Selecione</option>
-            <option v-for="t in teachers" :key="t.id" :value="t.id">{{ t.name }}</option>
+            <option v-for="t in teachers" :key="t.id" :value="t.id">
+              {{ t.name }}
+            </option>
           </select>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Sala de Aula</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Sala de Aula</label
+          >
           <select
             v-model="form.classroomId"
             required
@@ -121,7 +133,9 @@ onMounted(loadData);
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Período</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Período</label
+          >
           <input
             type="text"
             v-model="form.term"
@@ -134,7 +148,9 @@ onMounted(loadData);
         <div class="border-t pt-4 space-y-4">
           <h3 class="text-md font-semibold text-[#1C5E27]">Horário</h3>
 
-          <label class="block text-sm font-medium text-gray-600 mb-1">Dia da Semana</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Dia da Semana</label
+          >
           <select
             v-model="form.schedule.day"
             required
@@ -201,7 +217,6 @@ onMounted(loadData);
           Voltar
         </button>
       </RouterLink>
-
     </div>
   </BaseLayout>
 </template>

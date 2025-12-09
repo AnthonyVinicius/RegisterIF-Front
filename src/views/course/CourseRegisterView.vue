@@ -1,26 +1,28 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import BaseLayout from "../components/BaseLayout.vue";
-import ClassroomDAO from "../service/ClassroomDAO";
+import CourseDAO from "../../service/CourseDAO";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const router = useRouter();
 
-const classroom = ref({
+const course = ref({
   name: "",
-  location: ""
+  acronym: "",
+  duration: null,
 });
 
 async function submitForm() {
   try {
-    await ClassroomDAO.insert(classroom.value);
+    await CourseDAO.insert(course.value);
+    alert("Curso cadastrado com sucesso!");
 
-    alert("Sala cadastrada com sucesso!");
     router.back();
-
   } catch (err) {
-    console.error("Erro ao cadastrar sala:", err);
-    alert("Erro ao cadastrar sala: " + (err.response?.data?.message || err.message));
+    console.error("Erro ao cadastrar curso:", err);
+    alert(
+      "Erro ao cadastrar curso: " + (err.response?.data?.message || err.message)
+    );
   }
 }
 </script>
@@ -28,32 +30,47 @@ async function submitForm() {
 <template>
   <BaseLayout>
     <div class="flex justify-center py-6 relative">
-
       <form
         @submit.prevent="submitForm"
         class="space-y-6 bg-white shadow-md p-6 rounded-xl w-full max-w-md"
       >
-        <h2 class="text-xl font-bold text-gray-700 text-center">Cadastrar Sala de Aula</h2>
+        <h2 class="text-xl font-bold text-gray-700">Cadastrar Curso</h2>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Nome</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Nome</label
+          >
           <input
-            v-model="classroom.name"
+            v-model="course.name"
             type="text"
             maxlength="100"
-            placeholder="Ex: ADS2023-1"
             class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-600 p-2"
             required
           />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-600 mb-1">Localização</label>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Sigla</label
+          >
           <input
-            v-model="classroom.location"
+            v-model="course.acronym"
             type="text"
-            maxlength="100"
-            placeholder="Ex: Sala 1"
+            maxlength="10"
+            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-600 p-2"
+            required
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-600 mb-1"
+            >Duração (máx. 10)</label
+          >
+          <input
+            v-model.number="course.duration"
+            type="number"
+            min="1"
+            max="10"
             class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-600 p-2"
             required
           />
@@ -67,7 +84,7 @@ async function submitForm() {
         </button>
       </form>
 
-      <RouterLink to="/classroomDashboard">
+      <RouterLink to="/courseDashboard">
         <button
           class="bg-[#1C5E27] text-white font-semibold py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-[#154b1f] transition-colors text-sm absolute bottom-6 right-6"
         >
@@ -90,7 +107,6 @@ async function submitForm() {
           Voltar
         </button>
       </RouterLink>
-
     </div>
   </BaseLayout>
 </template>

@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import CourseRegisterView from "../views/CourseRegisterView.vue";
-import UserRegisterView from "../views/UserRegisterView.vue";
-import UserDashboardView from "../views/UserDashboardView.vue";
-import CourseDashboardView from "../views/CourseDashboardView.vue";
-import AllUsersView from "../views/AllUsersView.vue";
-import AllCoursesView from "../views/AllCoursesView.vue";
+import CourseRegisterView from "../views/course/CourseRegisterView.vue";
+import UserRegisterView from "../views/user/UserRegisterView.vue";
+import UserDashboardView from "../views/user/UserDashboardView.vue";
+import CourseDashboardView from "../views/course/CourseDashboardView.vue";
+import AllUsersView from "../views/user/AllUsersView.vue";
+import AllCoursesView from "../views/course/AllCoursesView.vue";
 import LoginView from "../views/LoginView.vue";
 import NoAccess from "../views/NoAccess.vue";
-import ClassroomDashboardView from "../views/ClassroomDashboardView.vue";
-import ClassroomRegisterView from "../views/ClassroomRegisterView.vue";
-import AllClassroomView from "../views/AllClassroomView.vue";
+import ClassroomDashboardView from "../views/classroom/ClassroomDashboardView.vue";
+import ClassroomRegisterView from "../views/classroom/ClassroomRegisterView.vue";
+import AllClassroomView from "../views/classroom/AllClassroomView.vue";
+import EnrollmentView from "../views/EnrollmentView.vue";
+import StudentDashboardView from "../views/user/StudentDashboardView.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -40,6 +42,11 @@ const router = createRouter({
       component: UserDashboardView,
     },
     {
+      path: "/studentDashboard",
+      name: "studentDashboard",
+      component: StudentDashboardView,
+    },
+    {
       path: "/classroomDashboard",
       name: "ClassroomDashboard",
       component: ClassroomDashboardView,
@@ -54,38 +61,43 @@ const router = createRouter({
       name: "registerClassroom",
       component: ClassroomRegisterView,
     },
-
+    {
+      path: "/enrollment",
+      name: "enrollment",
+      component: EnrollmentView,
+    },
     { path: "/allUsers", name: "allUsers", component: AllUsersView },
     { path: "/allCourses", name: "allCourses", component: AllCoursesView },
     {
       path: "/courseManager",
       name: "courseManager",
-      component: () => import("../views/CourseManagerView.vue"),
+      component: () => import("../views/course/CourseManagerView.vue"),
     },
     {
       path: "/subject",
       name: "SubjectsByCourse",
-      component: () => import("../views/SubjectsView.vue"),
+      component: () => import("../views/subject/SubjectsView.vue"),
     },
     {
       path: "/course/:id/manage",
       name: "courseManager",
-      component: () => import("../views/CourseManagerView.vue"),
+      component: () => import("../views/course/CourseManagerView.vue"),
     },
     {
       path: "/subject/:id/Offering",
       name: "SubjectOffering",
-      component: () => import("../views/SubjectOfferingRegisterView.vue"),
+      component: () =>
+        import("../views/subject/SubjectOfferingRegisterView.vue"),
     },
     {
       path: "/allOfferings",
       name: "allOfferings",
-      component: () => import("../views/AllSubjectsOfferingsView.vue"),
+      component: () => import("../views/subject/AllSubjectsOfferingsView.vue"),
     },
     {
       path: "/course/:id/subjects",
       name: "CourseSubjects",
-      component: () => import("../views/CourseSubjects.vue"),
+      component: () => import("../views/course/CourseSubjects.vue"),
     },
   ],
 });

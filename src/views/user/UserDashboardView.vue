@@ -1,10 +1,10 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import Actions from "../components/Actions.vue";
+import Actions from "../../components/Actions.vue";
 import { TextAlignJustify, NotepadText, Trash2 } from "lucide-vue-next";
 import { onMounted, ref } from "vue";
-import UserDao from "../service/UserDAO";
-import BaseLayout from "../components/BaseLayout.vue";
+import UserDao from "../../service/UserDAO";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const users = ref([]);
 
