@@ -2,8 +2,8 @@
 import { ref, onMounted } from "vue";
 import SubjectDAO from "../../service/SubjectDAO";
 import CourseDAO from "../../service/CourseDAO";
-import ModalSubject from "../components/ModalSubject.vue";
-import BaseLayout from "../components/BaseLayout.vue";
+import ModalSubject from "../../components/ModalSubject.vue";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const subjects = ref([]);
 const courses = ref([]);

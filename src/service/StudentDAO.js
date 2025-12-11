@@ -3,7 +3,7 @@ import { ApiRegistry } from "../api/ApiRegistry";
 
 class StudentDAO extends GenericDAO {
   constructor() {
-    super(ApiRegistry.pontoIF, "/user/student");
+    super(ApiRegistry.pontoIF, "/user/students");
   }
 }
 

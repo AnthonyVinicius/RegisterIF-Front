@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import BaseLayout from "../components/BaseLayout.vue";
+import BaseLayout from "../../components/BaseLayout.vue";
 import SubjectOfferingDAO from "../../service/SubjectOfferingDAO";
 import CourseDAO from "../../service/CourseDAO";
 import SubjectDAO from "../../service/SubjectDAO";

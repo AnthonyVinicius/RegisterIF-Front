@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SubjectDAO from "../../service/SubjectDAO";
 import CourseDAO from "../../service/CourseDAO";
-import BaseLayout from "../components/BaseLayout.vue";
+import BaseLayout from "../../components/BaseLayout.vue";
 
 const route = useRoute();
 const router = useRouter();

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import BaseLayout from "../components/BaseLayout.vue";
+import BaseLayout from "../../components/BaseLayout.vue";
 import SubjectDAO from "../../service/SubjectDAO";
 import TeacherDAO from "../../service/TeacherDAO";
 import SubjectOfferingDAO from "../../service/SubjectOfferingDAO";

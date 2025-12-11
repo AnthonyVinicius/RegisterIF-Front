@@ -10,7 +10,7 @@ import NoAccess from "../views/NoAccess.vue";
 import ClassroomDashboardView from "../views/classroom/ClassroomDashboardView.vue";
 import ClassroomRegisterView from "../views/classroom/ClassroomRegisterView.vue";
 import AllClassroomView from "../views/classroom/AllClassroomView.vue";
-import EnrollmentView from "../views/EnrollmentView.vue";
+import EnrollmentView from "../views/enrollment/AllEnrollmentView.vue";
 import StudentDashboardView from "../views/user/StudentDashboardView.vue";
 const router = createRouter({
   history: createWebHistory(),
@@ -98,6 +98,11 @@ const router = createRouter({
       path: "/course/:id/subjects",
       name: "CourseSubjects",
       component: () => import("../views/course/CourseSubjects.vue"),
+    },
+    {
+      path: "/enrollment/:studentId",
+      name: "EnrollmentDetails",
+      component: () => import("../views/enrollment/EnrollmentDetailsView.vue"),
     },
   ],
 });
