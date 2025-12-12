@@ -25,22 +25,6 @@ async function deleteClassroom(id) {
   }
 }
 
-const actions = [
-  {
-    icon: NotepadText,
-    title: "Cadastrar Sala de Aula",
-    description: "Adicionar novas salas",
-    color: "text-green-800",
-    to: "/registerClassroom",
-  },
-  {
-    icon: TextAlignJustify,
-    title: "Todas as Salas",
-    description: "Visualizar e gerenciar salas",
-    color: "text-green-800",
-    to: "/allClassroom",
-  },
-];
 
 onMounted(loadClassrooms);
 </script>
@@ -50,24 +34,21 @@ onMounted(loadClassrooms);
     <div class="space-y-8">
       <h1 class="text-2xl font-bold text-ponto-if-green">Classroom Dashboard</h1>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-        <RouterLink v-for="action in actions" :key="action.title" :to="action.to">
-          <Actions>
-            <template #logo>
-              <component :is="action.icon" :class="`${action.color} w-12 h-12`" />
-            </template>
-            <template #title>{{ action.title }}</template>
-            <template #description>{{ action.description }}</template>
-          </Actions>
-        </RouterLink>
-      </div>
-
       <section class="bg-white p-5 rounded-md shadow-sm">
         <div class="flex items-center mb-3">
           <h2 class="text-lg font-semibold">Últimas Salas Cadastradas</h2>
-          <RouterLink to="/allClassroom" class="ml-auto text-green-800 hover:underline">
-            Ver todas
-          </RouterLink>
+
+          <div class="ml-auto flex items-center gap-4">
+            <RouterLink to="/allClassroom" class="text-green-800 hover:underline">
+              Ver todas
+            </RouterLink>
+
+            <RouterLink to="/registerClassroom">
+              <button class="bg-[#1C5E27] hover:bg-[#174a20] text-white font-semibold py-2 px-5 rounded-md shadow-sm">
+                Nova Sala
+              </button>
+            </RouterLink>
+          </div>
         </div>
 
         <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
@@ -103,7 +84,6 @@ onMounted(loadClassrooms);
                 </td>
               </tr>
             </tbody>
-
           </table>
         </div>
       </section>

@@ -41,14 +41,13 @@ function getSubjectNameFromOffering(offeringId) {
 }
 
 async function enroll(offer) {
-  const payload = {
+  await EnrollmentDAO.insert({
     enrollmentId: null,
     studentId,
     subjectOfferingId: offer.id,
     status: "ACTIVE",
-  };
+  });
 
-  await EnrollmentDAO.insert(payload);
   await loadEnrollments();
   filterOfferings();
 }
@@ -63,63 +62,92 @@ onMounted(async () => {
 
 <template>
   <BaseLayout>
-    <div class="space-y-8 pb-20">
+    <div class="space-y-10">
       <h1 class="text-2xl font-bold text-ponto-if-green">
         Matrículas do Aluno
       </h1>
 
+      <!-- DISCIPLINAS MATRICULADAS -->
       <section class="bg-white p-5 rounded-md shadow-sm">
-        <h2 class="text-xl font-semibold mb-4 text-green-700">
-          Disciplinas já matriculadas
+        <h2 class="text-lg font-semibold mb-4 text-gray-700">
+          Disciplinas Matriculadas
         </h2>
 
-        <div v-if="enrolled.length === 0" class="text-gray-500">
-          O aluno não está matriculado em nenhuma disciplina.
-        </div>
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="bg-[#1C5E27]">
+              <tr>
+                <th class="px-6 py-3 font-semibold uppercase text-white">
+                  Disciplina
+                </th>
+              </tr>
+            </thead>
 
-        <ul class="space-y-3">
-          <li
-            v-for="en in enrolled"
-            :key="en.enrollmentId"
-            class="bg-gray-50 p-4 rounded-md shadow-sm"
-          >
-            {{ getSubjectNameFromOffering(en.subjectOfferingId) }}
-          </li>
-        </ul>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <tr v-for="en in enrolled" :key="en.enrollmentId" class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-medium text-gray-900">
+                  {{ getSubjectNameFromOffering(en.subjectOfferingId) }}
+                </td>
+              </tr>
+
+              <tr v-if="enrolled.length === 0">
+                <td class="px-6 py-6 text-center text-gray-500">
+                  Nenhuma disciplina matriculada
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
+      <!-- OFERTAS DISPONÍVEIS -->
       <section class="bg-white p-5 rounded-md shadow-sm">
-        <h2 class="text-xl font-semibold mb-4 text-green-700">
-          Ofertas disponíveis
+        <h2 class="text-lg font-semibold mb-4 text-gray-700">
+          Ofertas Disponíveis
         </h2>
 
-        <div v-if="availableOfferings.length === 0" class="text-gray-500">
-          Nenhuma oferta disponível para matrícula.
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="bg-[#1C5E27]">
+              <tr>
+                <th class="px-6 py-3 font-semibold uppercase text-white">
+                  Disciplina
+                </th>
+                <th class="px-6 py-3 font-semibold uppercase text-white">
+                  Horário
+                </th>
+                <th class="px-6 py-3 font-semibold uppercase text-white text-center">
+                  Ação
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <tr v-for="offer in availableOfferings" :key="offer.id" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 font-medium text-gray-900">
+                  {{ subjects[offer.subjectId] || "Disciplina" }}
+                </td>
+
+                <td class="px-6 py-4 text-gray-600">
+                  {{ offer.schedule.day }} • {{ offer.schedule.time }}
+                </td>
+
+                <td class="px-6 py-4 flex justify-center">
+                  <button @click="enroll(offer)"
+                    class="bg-[#1C5E27] hover:bg-[#174a20] text-white text-sm font-semibold px-4 py-1.5 rounded-md shadow">
+                    Matricular
+                  </button>
+                </td>
+              </tr>
+
+              <tr v-if="availableOfferings.length === 0">
+                <td colspan="3" class="px-6 py-6 text-center text-gray-500">
+                  Nenhuma oferta disponível para matrícula
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <ul class="space-y-3">
-          <li
-            v-for="offer in availableOfferings"
-            :key="offer.id"
-            class="bg-gray-50 p-4 rounded-md shadow-sm flex justify-between items-center"
-          >
-            <div>
-              <div class="font-semibold">
-                {{ subjects[offer.subjectId] || "Disciplina" }}
-              </div>
-              <div class="text-sm text-gray-600">
-                {{ offer.schedule.day }} • {{ offer.schedule.time }}
-              </div>
-            </div>
-
-            <button
-              class="px-3 py-1 text-white bg-green-700 rounded-md hover:bg-green-900"
-              @click="enroll(offer)"
-            >
-              Matricular
-            </button>
-          </li>
-        </ul>
       </section>
     </div>
   </BaseLayout>
