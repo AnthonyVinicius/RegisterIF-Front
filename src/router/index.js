@@ -69,16 +69,6 @@ const router = createRouter({
     { path: "/allUsers", name: "allUsers", component: AllUsersView },
     { path: "/allCourses", name: "allCourses", component: AllCoursesView },
     {
-      path: "/courseManager",
-      name: "courseManager",
-      component: () => import("../views/course/CourseManagerView.vue"),
-    },
-    {
-      path: "/subject",
-      name: "SubjectsByCourse",
-      component: () => import("../views/subject/SubjectsView.vue"),
-    },
-    {
       path: "/course/:id/manage",
       name: "courseManager",
       component: () => import("../views/course/CourseManagerView.vue"),
@@ -93,11 +83,6 @@ const router = createRouter({
       path: "/allOfferings",
       name: "allOfferings",
       component: () => import("../views/subject/AllSubjectsOfferingsView.vue"),
-    },
-    {
-      path: "/course/:id/subjects",
-      name: "CourseSubjects",
-      component: () => import("../views/course/CourseSubjects.vue"),
     },
     {
       path: "/enrollment/:studentId",
