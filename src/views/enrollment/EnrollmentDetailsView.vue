@@ -2,17 +2,25 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import BaseLayout from "../../components/BaseLayout.vue";
+
 import SubjectOfferingDAO from "../../service/SubjectOfferingDAO";
 import EnrollmentDAO from "../../service/EnrollmentDAO";
 import SubjectDAO from "../../service/SubjectDAO";
+import StudentDAO from "../../service/StudentDAO";
 
 const route = useRoute();
 const studentId = route.params.studentId;
+
+const student = ref(null);
 
 const allOfferings = ref([]);
 const availableOfferings = ref([]);
 const enrolled = ref([]);
 const subjects = ref({});
+
+async function loadStudent() {
+  student.value = await StudentDAO.getById(studentId);
+}
 
 async function loadSubjects() {
   const data = await SubjectDAO.getAll();
@@ -53,6 +61,7 @@ async function enroll(offer) {
 }
 
 onMounted(async () => {
+  await loadStudent();
   await loadSubjects();
   await loadOfferings();
   await loadEnrollments();
@@ -64,10 +73,9 @@ onMounted(async () => {
   <BaseLayout>
     <div class="space-y-10">
       <h1 class="text-2xl font-bold text-ponto-if-green">
-        Matrículas do Aluno
+        Matrículas do Aluno<span v-if="student">: {{ student.name }}</span>
       </h1>
 
-      <!-- DISCIPLINAS MATRICULADAS -->
       <section class="bg-white p-5 rounded-md shadow-sm">
         <h2 class="text-lg font-semibold mb-4 text-gray-700">
           Disciplinas Matriculadas
@@ -84,7 +92,7 @@ onMounted(async () => {
             </thead>
 
             <tbody class="divide-y divide-gray-200 bg-white">
-              <tr v-for="en in enrolled" :key="en.enrollmentId" class="hover:bg-gray-50">
+              <tr v-for="en in enrolled" :key="en.id" class="hover:bg-gray-50">
                 <td class="px-6 py-4 font-medium text-gray-900">
                   {{ getSubjectNameFromOffering(en.subjectOfferingId) }}
                 </td>
@@ -100,7 +108,6 @@ onMounted(async () => {
         </div>
       </section>
 
-      <!-- OFERTAS DISPONÍVEIS -->
       <section class="bg-white p-5 rounded-md shadow-sm">
         <h2 class="text-lg font-semibold mb-4 text-gray-700">
           Ofertas Disponíveis
@@ -123,7 +130,11 @@ onMounted(async () => {
             </thead>
 
             <tbody class="divide-y divide-gray-200 bg-white">
-              <tr v-for="offer in availableOfferings" :key="offer.id" class="hover:bg-gray-50 transition-colors">
+              <tr
+                v-for="offer in availableOfferings"
+                :key="offer.id"
+                class="hover:bg-gray-50 transition-colors"
+              >
                 <td class="px-6 py-4 font-medium text-gray-900">
                   {{ subjects[offer.subjectId] || "Disciplina" }}
                 </td>
@@ -133,8 +144,10 @@ onMounted(async () => {
                 </td>
 
                 <td class="px-6 py-4 flex justify-center">
-                  <button @click="enroll(offer)"
-                    class="bg-[#1C5E27] hover:bg-[#174a20] text-white text-sm font-semibold px-4 py-1.5 rounded-md shadow">
+                  <button
+                    @click="enroll(offer)"
+                    class="bg-[#1C5E27] hover:bg-[#174a20] text-white text-sm font-semibold px-4 py-1.5 rounded-md shadow"
+                  >
                     Matricular
                   </button>
                 </td>

@@ -5,6 +5,11 @@ class StudentDAO extends GenericDAO {
   constructor() {
     super(ApiRegistry.pontoIF, "/user/students");
   }
+
+  async getById(id) {
+    const response = await this.api.get(`/user/student/${id}`);
+    return response.data;
+  }
 }
 
 export default new StudentDAO();
