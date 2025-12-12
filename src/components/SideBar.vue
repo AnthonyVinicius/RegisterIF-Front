@@ -62,7 +62,7 @@ const menuItemsUser = shallowRef([
     { to: "/courseDashboard", label: "Cursos", icon: GraduationCap },
     { to: "/classroomDashboard", label: "Sala De aula", icon: Users },
     { to: "/allOfferings", label: "Ofertas", icon: FileStack  },
-    { to: "/enrollment", label: "Inscrição", icon: UserPlus  },
+    { to: "/enrollment", label: "Alunos", icon: UserPlus  },
 ]);
 
 
