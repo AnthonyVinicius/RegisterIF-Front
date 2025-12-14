@@ -25,6 +25,11 @@ const roles = ref(["ADMIN", "STUDENT", "PROFESSOR", "SECRETARY", "TECHNICIAN"]);
 
 const submitForm = async () => {
   try {
+     if (user.value.password.length < 8) {
+      alert("A senha deve conter no mínimo 8 caracteres.");
+      return;
+    }
+
     await UserDAO.insert(user.value);
     alert("Usuário cadastrado com sucesso!");
     limparForms();
